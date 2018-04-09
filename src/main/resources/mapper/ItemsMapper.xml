@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace命名空间，作用就是对sql进行分类化管理，理解sql隔离
+    注意：使用mapper代理方法开发，namespace有特殊重要作用
+-->
+<mapper namespace="com.xt.mybatis.mapper.ItemsMapper">
+
+    <sql id="query_item_where">
+        <if test="itemsCustom != null">
+            <if test="itemsCustom.name != null and itemsCustom.name != ''">
+                NAME LIKE '%${itemsCustom.name}%'
+            </if>
+        </if>
+    </sql>
+    <!--根据商品名称查新商品信息-->
+    <select id="findItemsListByName" parameterType="itemsQueryVo" resultType="itemsCustom">
+        SELECT * FROM items
+        <where>
+            <include refid="query_item_where"/>
+        </where>
+    </select>
+</mapper>
