@@ -19,4 +19,18 @@ public interface ItemsService {
      * Description:根据商品名称查询商品信息列表
      */
     List<ItemsCustom> findItemsListByName(ItemsQueryVo itemsQueryVo) throws Exception;
+
+    /**
+     * @Description: 根据商品id查询商品信息
+     * @Date: 2018/4/29 18:58
+     * @param:
+     */
+    ItemsCustom findItemsById(Integer id) throws Exception;
+
+    /**
+     * @Description: 更新商品信息
+     * @Date: 2018/4/29 19:01
+     * @param: null
+     */
+    void updateItems(Integer id, ItemsCustom itemsCustom) throws Exception;
 }

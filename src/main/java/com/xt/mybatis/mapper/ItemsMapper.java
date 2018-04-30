@@ -1,18 +1,39 @@
 package com.xt.mybatis.mapper;
 
-import com.xt.mybatis.domain.ItemsCustom;
-import com.xt.mybatis.domain.ItemsQueryVo;
+import com.xt.mybatis.domain.Items;
+import com.xt.mybatis.domain.ItemsExample;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**
- * Created with xt.
- * Date: 2018/4/9
- * Time: 14:06
- * Description: 商品Mapper
- */
 @Mapper
 public interface ItemsMapper {
-    List<ItemsCustom> findItemsListByName(ItemsQueryVo itemsQueryVo) throws Exception;
+    int countByExample(ItemsExample example);
+
+    int deleteByExample(ItemsExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(Items record);
+
+    int insertSelective(Items record);
+
+    List<Items> selectByExampleWithBLOBs(ItemsExample example);
+
+    List<Items> selectByExample(ItemsExample example);
+
+    Items selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") Items record, @Param("example") ItemsExample example);
+
+    int updateByExampleWithBLOBs(@Param("record") Items record, @Param("example") ItemsExample example);
+
+    int updateByExample(@Param("record") Items record, @Param("example") ItemsExample example);
+
+    int updateByPrimaryKeySelective(Items record);
+
+    int updateByPrimaryKeyWithBLOBs(Items record);
+
+    int updateByPrimaryKey(Items record);
 }

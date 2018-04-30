@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>修改商品信息</title>
+
+</head>
+<body>
+<form id="itemForm" action="/items/updateItems" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="id" th:value="${itemsCustom.id }" />
+	修改商品信息：
+	<table width="100%" border=1>
+		<tr>
+			<td>商品名称</td>
+			<td><input type="text" name="name" value="name" th:value="${itemsCustom.name }" /></td>
+		</tr>
+		<tr>
+			<td>商品价格</td>
+			<td><input type="text" name="price" value="price" th:value="${itemsCustom.price }" /></td>
+		</tr>
+		<tr>
+			<td>商品生产日期</td>
+			<td><input type="text" name="createtime" value="createtime" th:value="${#dates.format(itemsCustom.createtime,'yyyy-MM-dd HH:mm:ss')}" />
+			</td>
+		</tr>
+		<!--<tr>
+			<td>商品图片</td>
+			<td>
+				<c:if test="${item.pic !=null}">
+					<img src="/pic/${itemsCustom.pic}" width=100 height=100/>
+					<br/>
+				</c:if>
+				<input type="file"  name="pictureFile"/>
+			</td>
+		</tr>
+		<tr>
+			<td>商品简介</td>
+			<td>
+				<textarea rows="3" cols="30" name="detail">${itemsCustom.detail }</textarea>
+			</td>
+		</tr>-->
+		<tr>
+			<td colspan="2" align="center"><input type="submit" value="提交"/>
+			</td>
+		</tr>
+	</table>
+
+</form>
+</body>
+
+</html>
