@@ -5,6 +5,12 @@
 
 </head>
 <body>
+<!--显示错误信息-->
+<div th:if="${errorList} != null">
+	<div th:each="error : ${errorList}">
+		<div th:text="${error.defaultMessage}" />
+	</div>
+</div>
 <form id="itemForm" action="/items/updateItems" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="id" value="id" th:value="${itemsCustom.id }" />
 	修改商品信息：

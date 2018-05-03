@@ -1,5 +1,7 @@
 package com.xt.mybatis.domain;
 
+import java.util.List;
+
 /**
  * Created with xt.
  * Date: 2018/3/20
@@ -12,6 +14,17 @@ public class ItemsQueryVo{
     private Items items;
     //商品信息扩展类
     private ItemsCustom itemsCustom;
+
+    //批量商品信息列表
+    private List<ItemsCustom> itemsList;
+
+    public List<ItemsCustom> getItemsList() {
+        return itemsList;
+    }
+
+    public void setItemsList(List<ItemsCustom> itemsList) {
+        this.itemsList = itemsList;
+    }
 
     public Items getIterms() {
         return items;

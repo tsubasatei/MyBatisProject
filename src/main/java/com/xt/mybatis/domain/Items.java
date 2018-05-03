@@ -1,16 +1,24 @@
 package com.xt.mybatis.domain;
 
+import com.xt.mybatis.validation.ValidGroup1;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class Items {
     private Integer id;
 
+    //message:提交校验出错显示的信息
+    //groups:此校验属于哪个分组，groups可以定义多个分组
+    @Size(min = 1, max = 30, message = "{items.name.length.error}", groups = {ValidGroup1.class})
     private String name;
 
     private Float price;
 
     private String pic;
 
+    @NotNull(message = "{items.date.isNull}")
     private Date createtime;
 
     private String detail;

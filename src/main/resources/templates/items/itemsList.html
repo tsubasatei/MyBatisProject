@@ -2,18 +2,40 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>查询商品列表</title>
+
+	<script>
+        //批量删除
+        function batchDeleteItems(){
+            document.itemsForm.action = "/items/batchDeleteItems";
+            document.itemsForm.submit();
+        }
+		//查询
+        function queryItems(){
+            document.itemsForm.action = "/items/findItemsListByName";
+            document.itemsForm.submit();
+        }
+        //批量修改
+        function batchEditItems(){
+            document.itemsForm.action = "/items/batchEditItems";
+            document.itemsForm.submit();
+        }
+	</script>
 </head>
-<body> 
-<form action="${pageContext.request.contextPath }/item/queryItem.action" method="post">
+<body>
+<form name="itemsForm" action="/items/findItemsListByName" method="post">
 查询条件：
 <table width="100%" border=1>
 <tr>
-<td><input type="submit" value="查询"/></td>
+	<td>商品名称：<input type="text" name="itemsCustom.name" /></td>
+	<td><input type="button" value="查询" onclick="queryItems()"/></td>
+	<td><input type="button" value="批量删除" onclick="batchDeleteItems()"/></td>
+	<td><input type="button" value="批量修改" onclick="batchEditItems()"/></td>
 </tr>
 </table>
 商品列表：
 <table width="100%" border=1>
 <tr>
+	<td>选择</td>
 	<td>商品名称</td>
 	<td>商品价格</td>
 	<td>生产日期</td>
@@ -22,11 +44,12 @@
 </tr>
 
 <tr th:each="item : ${itemsList}">
+	<td><input type="checkbox" name="items_id" th:value="${item.id}"></td>
 	<td th:text="${item.name}"></td>
 	<td th:text="${item.price}"></td>
 	<td th:text="${#dates.format(item.createtime,'yyyy-MM-dd HH:mm:ss')}"></td>
 	<td th:text="${item.detail}"></td>
-	<td><a href="success.html" th:href="@{/items/editItems(id=${item.id})}">修改</a></td>
+	<td><a href="../success.html" th:href="@{/items/editItems(id=${item.id})}">修改</a></td>
 </tr>
 
 </table>

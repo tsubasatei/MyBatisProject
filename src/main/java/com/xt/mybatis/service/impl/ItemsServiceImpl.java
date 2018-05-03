@@ -3,6 +3,7 @@ package com.xt.mybatis.service.impl;
 import com.xt.mybatis.domain.Items;
 import com.xt.mybatis.domain.ItemsCustom;
 import com.xt.mybatis.domain.ItemsQueryVo;
+import com.xt.mybatis.exception.CustomerException;
 import com.xt.mybatis.mapper.ItemsCustomerMapper;
 import com.xt.mybatis.mapper.ItemsMapper;
 import com.xt.mybatis.service.ItemsService;
@@ -33,9 +34,18 @@ public class ItemsServiceImpl implements ItemsService{
     @Override
     public ItemsCustom findItemsById(Integer id) throws Exception {
         Items items = itemsMapper.selectByPrimaryKey(id);
+
+        /*如果与业务功能相关的异常，建议在service中抛出异常。
+          与业务功能没有关系的异常，建议在controller中抛出。*/
+        if(null == items){
+            throw new CustomerException("修改的商品信息不存在！");
+        }
         //中间对商品信息进行业务处理
-        ItemsCustom itemsCustom = new ItemsCustom();
-        BeanUtils.copyProperties(items, itemsCustom);
+        ItemsCustom itemsCustom = null;
+        if (items != null){
+            itemsCustom = new ItemsCustom();
+            BeanUtils.copyProperties(items, itemsCustom);
+        }
         return itemsCustom;
     }
 
