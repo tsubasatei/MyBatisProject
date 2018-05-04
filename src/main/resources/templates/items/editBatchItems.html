@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>批量修改商品信息</title>
+
+	<script>
+        //批量修改提交
+        function batchUpdateItems(){
+            document.itemsForm.action = "/items/batchUpdateItems";
+            document.itemsForm.submit();
+        }
+	</script>
+</head>
+<body>
+<form name="itemsForm" action="/items/findItemsListByName" method="post">
+查询条件：
+<table width="100%" border=1>
+<tr>
+	<td><input type="button" value="批量提交" onclick="batchUpdateItems()"/></td>
+</tr>
+</table>
+商品列表：
+<table width="100%" border=1>
+<tr>
+	<td>商品名称</td>
+	<td>商品价格</td>
+	<td>生产日期</td>
+	<td>商品描述</td>
+</tr>
+
+<tr th:each="item,iterStat : ${itemsList}">
+	<input type="hidden" name="itemsList[${iterStat.index}].id" th:value="${item.id}">
+	<td><input type="text" name="itemsList[${iterStat.index}].name" th:value="${item.name}"></td>
+	<td><input type="text" name="itemsList[${iterStat.index}].price" th:value="${item.price}"></td>
+	<td><input type="text" name="itemsList[${iterStat.index}].createtime" th:value="${#dates.format(item.createtime,'yyyy-MM-dd HH:mm:ss')}"></td>
+	<td><input type="text" name="itemsList[${iterStat.index}].detail" th:value="${item.detail}"></td>
+</tr>
+
+</table>
+</form>
+</body>
+
+</html>

@@ -59,4 +59,9 @@ public class ItemsServiceImpl implements ItemsService{
         itemsCustom.setId(id);
         itemsMapper.updateByPrimaryKeyWithBLOBs(itemsCustom);
     }
+
+    @Override
+    public void batchDeleteItems(Integer[] itemsId) throws Exception {
+        itemsCustomerMapper.batchDeleteItems(itemsId);
+    }
 }

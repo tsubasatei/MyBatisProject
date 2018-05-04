@@ -33,4 +33,7 @@ public interface ItemsService {
      * @param: null
      */
     void updateItems(Integer id, ItemsCustom itemsCustom) throws Exception;
+
+    //批量删除商品信息
+    void batchDeleteItems(Integer[] itemsId) throws Exception;
 }

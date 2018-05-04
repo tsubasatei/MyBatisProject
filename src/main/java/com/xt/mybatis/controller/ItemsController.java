@@ -1,13 +1,12 @@
 package com.xt.mybatis.controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.xt.mybatis.domain.ItemsCustom;
 import com.xt.mybatis.domain.ItemsQueryVo;
 import com.xt.mybatis.exception.CustomerException;
 import com.xt.mybatis.service.ItemsService;
 import com.xt.mybatis.validation.ValidGroup1;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +30,8 @@ public class ItemsController {
 
     @Autowired
     ItemsService itemsService;
+    @Value("${web.upload-path}")
+    private String path;
 
     @RequestMapping("/findItemsListByName")
     public String findItemsListByName(ItemsQueryVo itemsQueryVo, Model model) throws Exception {
@@ -93,9 +94,13 @@ public class ItemsController {
 
     //商品信息批量删除
     @PostMapping("/batchDeleteItems")
-    public String batchDeleteItems(Integer[] items_id){
-        //调用service的批量删除方法
-
+    public String batchDeleteItems(@RequestParam Integer[] items_id) throws Exception {
+        //调用service的批量删除方法,表有关联无法直接删
+        /*try {
+            itemsService.batchDeleteItems(items_id);
+        }catch (Exception ex){
+            throw new  CustomerException(ex.getMessage());
+        }*/
         //return "redirect:findItemsListByName";
         return "success";
     }

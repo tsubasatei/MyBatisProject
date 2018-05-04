@@ -19,4 +19,11 @@
             <include refid="query_item_where"/>
         </where>
     </select>
+
+    <!--根据商品id删除商品信息-->
+    <delete id="batchDeleteItems" parameterType="int[]">
+        DELETE FROM items
+        where id in
+        <foreach collection="array" open="(" item="id" separator="," close=")">#{id}</foreach>
+    </delete>
 </mapper>

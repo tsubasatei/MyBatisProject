@@ -15,4 +15,5 @@ import java.util.List;
 @Mapper
 public interface ItemsCustomerMapper {
     List<ItemsCustom> findItemsListByName(ItemsQueryVo itemsQueryVo) throws Exception;
+    void batchDeleteItems(Integer[] items_id) throws Exception;
 }
