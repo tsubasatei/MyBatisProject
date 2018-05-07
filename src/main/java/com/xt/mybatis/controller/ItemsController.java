@@ -13,9 +13,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created with xt.
@@ -30,6 +33,7 @@ public class ItemsController {
 
     @Autowired
     ItemsService itemsService;
+    //图片路径
     @Value("${web.upload-path}")
     private String path;
 
@@ -43,6 +47,15 @@ public class ItemsController {
         model.addAttribute("itemsList", itemsList);
 
         return "items/itemsList";
+    }
+
+    //查询商品信息，输出json
+    ///itemsView/{id}里边的{id}表示将这个位置上的参数传到@PathVariable指定的名称中
+    @RequestMapping("/itemsView/{id}")
+    public @ResponseBody ItemsCustom itemsView(@PathVariable("id") Integer id) throws Exception {
+
+        ItemsCustom itemsCustom = itemsService.findItemsById(id);
+       return itemsCustom;
     }
 
     @RequestMapping("/hello")
@@ -77,7 +90,8 @@ public class ItemsController {
     @RequestMapping(value="/updateItems", method = RequestMethod.POST)
     public String updateItems(Model model, Integer id,
                               @ModelAttribute("itemsCustom") @Validated(value = {ValidGroup1.class}) ItemsCustom itemsCustom,
-                              BindingResult bindingResult) throws Exception {
+                              BindingResult bindingResult,
+                              MultipartFile items_pic) throws Exception {
         if (bindingResult.hasErrors()){
             List<ObjectError> errorList = bindingResult.getAllErrors();
             for (ObjectError error : errorList){
@@ -88,6 +102,23 @@ public class ItemsController {
             model.addAttribute("itemsCustom", itemsCustom);
             return "items/editItems";
         }
+
+        //原图片名称
+        String originalFilename = items_pic.getOriginalFilename();
+
+        if(items_pic != null && originalFilename != null && originalFilename.length() > 0){
+
+            //新图片名称
+            String newFilename = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
+            //新图片
+            File newFile = new File(path + newFilename);
+            //将内存中的数据写入磁盘
+            items_pic.transferTo(newFile);
+
+            //将新图片名称写入itemsCustom
+            itemsCustom.setPic(newFilename);
+        }
+
         itemsService.updateItems(id, itemsCustom);
         return "redirect:findItemsListByName";
     }

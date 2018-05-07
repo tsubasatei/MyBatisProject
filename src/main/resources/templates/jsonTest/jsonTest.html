@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>json交互测试</title>
+    <script>
+        //请求json串，输出json串
+        function requestBody(){
+            $.ajax({
+                type : 'post',
+                url : '/json/requestBody',
+                contentType : 'application/json;charset=utf-8',
+                //数据格式是json串
+                data :  '{"name" : "手机", "price" : 999}',
+                success : function(data){//alert json结果
+                    alert(data);
+                }
+            });
+        }
+
+        //请求key/value，输出json串
+        function responseBody(){
+            $.ajax({
+                type : 'post',
+                url : '/json/responseBody',
+                //数据格式是key/value 不需要制定格式
+                data :  'name=手机&price=999',
+                success : function(data){//alert json结果
+                    alert(data);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <input type="button" onclick="requestBody()" value="请求json串,输出json串">
+    <input type="button" onclick="responseBody()" value="请求key/value,输出json串">
+</body>
+<script th:src="@{/js/jquery-1.4.4.min.js}"></script>
+</html>
